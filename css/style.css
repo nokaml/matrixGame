@@ -26,10 +26,19 @@ body {
     border-radius: 1rem;
 }
 
+.container1 {
+    width: auto;
+    height: 40vw;
+    background-color: rgba(240, 248, 255, 0.781);
+    box-shadow:0 0 1.5rem rgba(37, 51, 61, 0.226);
+    border-radius: 1rem;
+    overflow-y: auto;
+}
+
 .label {
     margin: 2rem;
     font-size: x-large;
-    font-weight: 500;
+    font-weight: 600;
     display: flex;
     justify-content: center;
 }
@@ -113,3 +122,17 @@ body {
 .btn2 {
     margin: 2rem;
 }
+
+.defaultText {
+    height: 50vh;
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+    line-height: 1.5rem;
+}
+
+.defaultText div {
+    margin: .5rem;
+}
+
