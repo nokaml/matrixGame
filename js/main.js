@@ -1,6 +1,6 @@
 let table = document.querySelector(".table");
 let button = document.querySelector(".btn1");
-let fullTable = document.querySelector(".fullTable");
+let fullTable = document.querySelector("table");
 let array = [];
 
 let selectValues = new URLSearchParams(window.location.search);
@@ -54,19 +54,19 @@ function setCookie(name, value, options = {}) {
   document.cookie = updatedCookie;
 }
 
-// function tableValues(array, num1, num2) {
-//     num1 += 2;
-//     num2 += 2;
-//     for (i = 0; i < num2; i++) {
-//         tr = document.createElement('tr');
-//         for (j = 0; j < num1; j++) {
-//             td = document.createElement('td');
-//             td.innerHTML = 1;
-//             tr.appendChild(td);
-//         }
-//         fullTable.appendChild(tr);
-//     }
-// }
+function tableValues(num1, num2) {
+    num1 += 2;
+    num2 += 2;
+    for (i = 0; i < num2; i++) {
+        tr = document.createElement('tr');
+        for (j = 0; j < num1; j++) {
+            td = document.createElement('td');
+            td.innerHTML = 1;
+            tr.appendChild(td);
+        }
+        fullTable.appendChild(tr);
+    }
+}
 
 tableCreator(width, width1);
 

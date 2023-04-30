@@ -28,7 +28,7 @@ body {
 
 .container1 {
     width: auto;
-    height: 40vw;
+    height: 70vh;
     background-color: rgba(240, 248, 255, 0.781);
     box-shadow:0 0 1.5rem rgba(37, 51, 61, 0.226);
     border-radius: 1rem;
@@ -124,7 +124,7 @@ body {
 }
 
 .defaultText {
-    height: 50vh;
+    height: 38vh;
     width: 50vw;
     display: flex;
     flex-direction: column;
@@ -136,3 +136,18 @@ body {
     margin: .5rem;
 }
 
+.fullTable {
+    font-size: large;
+    width: 15vw;
+    margin: 2.5rem;
+    background-color:  rgba(240, 248, 255, 0.774);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border: 1px solid #00000070;
+    border-radius: 5px;
+}
+
+.fullTable td {
+    border: 1px solid #00000070;
+}
