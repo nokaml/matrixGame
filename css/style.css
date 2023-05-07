@@ -138,13 +138,49 @@ body {
 
 .fullTable {
     font-size: medium;
-    width: fit-content;
-    margin: 2.5rem;
-    background-color:  rgba(240, 248, 255, 0.774);
-    border: 1px solid #00000080;
 }
 
 td {
-    padding: .5rem;
+    background-color:  rgba(240, 248, 255, 0.774);
     border: 1px solid #00000080;
+    padding: .8rem;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.table-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: 3rem;
+}
+
+.A {
+    font-size: large;
+}
+
+.A > * {
+    padding-bottom: 1rem;
+    padding-top: .5rem;
+}
+
+.B {
+    display: flex;
+    margin-left: 5rem;
+    font-size: large;
+}
+
+.B > * {
+    padding: 0 .5rem;
+    padding-bottom: .5rem;
+}
+
+.solution {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+    line-height: 1.5rem;
 }

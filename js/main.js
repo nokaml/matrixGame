@@ -1,13 +1,24 @@
+// all variables
+
 var table = document.querySelector(".table");
 var button = document.querySelector(".btn1");
 var button1 = document.querySelector(".button");
 var fullTable = document.querySelector(".fullTable");
+var A = document.querySelector('.A');
+var B = document.querySelector('.B');
+var solution = document.querySelector('.solution');
 
 var array = [];
+var minArr = [];
+var maxArr = [];
+var fullMinArr = [];
+var fullMaxArr = [];
 
 var selectValues = new URLSearchParams(window.location.search);
 var width = +selectValues.get("choice");
 var width1 = +selectValues.get("choice1");
+
+// all functions
 
 function tableCreator(num1, num2) {
   for (i = 0; i < num2; i++) {
@@ -68,6 +79,19 @@ function getCookie(name) {
 }
 
 function tableValues(num1, num2) {
+
+  for (i = 0; i < num2; i++) {
+    let a = document.createElement('div');
+    a.innerHTML = 'A' + (i+1);
+    A.append(a);
+  }
+
+  for (i = 0; i < num1; i++) {
+    let b = document.createElement('div');
+    b.innerHTML = 'B' + (i+1);
+    B.append(b);
+  }
+
   let table = document.createElement("table");
   let k = 0;
 
@@ -77,11 +101,40 @@ function tableValues(num1, num2) {
       k++;
       let td = tr.insertCell();
       td.innerHTML = getCookie('q'+k);
+      minArr.push(getCookie('q'+k));
+      maxArr.push(getCookie('q'+k));
     }
+
+    fullMinArr.push(Math.min(...minArr));
+    minArr.length = 0;
   }
+  
+  // potential solution of the problem for finding max min value
+
+  /* function getColumnsMax(matrix, rows, columns) {
+  const maxValues = [];
+  for (let column = 0; column < columns; column++) {
+    const columnValues = [];
+    for (let row = 0; row < rows; row++) {
+      columnValues.push(matrix[row][column]);
+    }
+    maxValues.push(Math.max(...columnValues));
+  }
+  
+  return maxValues;
+}
+
+  const mat = [[2,32,3], [14,5,6], [17,28,9]];
+
+  getColumnsMax(mat, 3, 3); 
+  */ 
 
   fullTable.appendChild(table);
 }
+
+
+
+// actual actions
 
 tableCreator(width, width1);
 
@@ -95,10 +148,10 @@ if (button) {
       if (isNaN(array[i])) {
         alert("ВВЕДИТЕ ЧИСЛО!");
         e.preventDefault();
-        break;
+        continue;
       }
+      location.reload();
     }
-    location.reload();
   });
 }
 
@@ -118,3 +171,7 @@ if (button1) {
 }
 
 tableValues(getCookie("select1"), getCookie("select2"));
+
+document.addEventListener('DOMContentLoaded', () => {
+  solution.innerHTML = `Находим гарантированный выигрыш, определяемый нижней ценой игры a = max(ai) = ${Math.max(...fullMinArr)}, которая указывает на максимальную чистую стратегию A2.`;
+})
