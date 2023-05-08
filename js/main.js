@@ -178,6 +178,12 @@ if (button1) {
 tableValues(getCookie("select1"), getCookie("select2"));
 
 document.addEventListener('DOMContentLoaded', () => {
-  solution.innerHTML = `Находим гарантированный выигрыш, определяемый нижней ценой игры a = max(ai) = ${Math.max(...fullMinArr)}, которая указывает на максимальную чистую стратегию A2.
-  Верхняя цена игры b = min(bj) = ${Math.min(...toOneDimension(fullMaxArr))}.`;
+
+  solution.innerHTML = `Находим гарантированный выигрыш, определяемый нижней ценой игры a = max(ai) = ${Math.max(...fullMinArr)}, которая указывает на максимальную чистую стратегию A2.<br>
+  Верхняя цена игры b = min(bj) = ${Math.min(...toOneDimension(fullMaxArr))}.<br>`;
+
+  if (Math.max(...fullMinArr) == Math.min(...toOneDimension(fullMaxArr))) {
+    solution.innerHTML += `Цена игры равна ${Math.max(...fullMinArr)}.`;
+  }
 })
+
