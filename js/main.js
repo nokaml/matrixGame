@@ -78,6 +78,29 @@ function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
+function getColumnsMax(matrix, rows, columns) {
+  const maxValues = [];
+  for (let column = 0; column < columns; column++) {
+    const columnValues = [];
+    for (let row = 0; row < rows; row++) {
+      columnValues.push(matrix[row][column]);
+    }
+    maxValues.push(Math.max(...columnValues));
+  }
+  
+  return maxValues;
+}
+
+function toOneDimension(matrix) {
+  let arr = [];
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      arr.push(matrix[i][j]);
+    }
+  }
+    return arr;
+}
+
 function tableValues(num1, num2) {
 
   for (i = 0; i < num2; i++) {
@@ -96,43 +119,25 @@ function tableValues(num1, num2) {
   let k = 0;
 
   for (i = 0; i < num2; i++) {
+    let temp = [];
     let tr = table.insertRow();
     for (j = 0; j < num1; j++) {
       k++;
       let td = tr.insertCell();
       td.innerHTML = getCookie('q'+k);
       minArr.push(getCookie('q'+k));
-      maxArr.push(getCookie('q'+k));
+      temp.push(getCookie('q'+k));
     }
-
+    maxArr.push(temp);
     fullMinArr.push(Math.min(...minArr));
     minArr.length = 0;
   }
   
-  // potential solution of the problem for finding max min value
-
-  /* function getColumnsMax(matrix, rows, columns) {
-  const maxValues = [];
-  for (let column = 0; column < columns; column++) {
-    const columnValues = [];
-    for (let row = 0; row < rows; row++) {
-      columnValues.push(matrix[row][column]);
-    }
-    maxValues.push(Math.max(...columnValues));
-  }
-  
-  return maxValues;
-}
-
-  const mat = [[2,32,3], [14,5,6], [17,28,9]];
-
-  getColumnsMax(mat, 3, 3); 
-  */ 
-
+  fullMaxArr.push(getColumnsMax(maxArr, num1, num2));
+  console.log(fullMinArr);
+  console.log(fullMaxArr);
   fullTable.appendChild(table);
 }
-
-
 
 // actual actions
 
@@ -173,5 +178,6 @@ if (button1) {
 tableValues(getCookie("select1"), getCookie("select2"));
 
 document.addEventListener('DOMContentLoaded', () => {
-  solution.innerHTML = `Находим гарантированный выигрыш, определяемый нижней ценой игры a = max(ai) = ${Math.max(...fullMinArr)}, которая указывает на максимальную чистую стратегию A2.`;
+  solution.innerHTML = `Находим гарантированный выигрыш, определяемый нижней ценой игры a = max(ai) = ${Math.max(...fullMinArr)}, которая указывает на максимальную чистую стратегию A2.
+  Верхняя цена игры b = min(bj) = ${Math.min(...toOneDimension(fullMaxArr))}.`;
 })
