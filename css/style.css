@@ -136,3 +136,10 @@ body {
     margin: .5rem;
 }
 
+.box {
+    width: 1rem;
+    height: 1rem;
+    background-color: rgba(255, 255, 255, 0.816);
+    margin: 4rem;
+    padding: 1rem;
+}

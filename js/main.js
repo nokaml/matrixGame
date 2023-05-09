@@ -30,21 +30,27 @@ function doArray(table, array) {
     }   
 }
 
-function tableValues(array, num1, num2) {
-    num1 += 2;
-    num2 += 2;
-    for (i = 0; i < num2; i++) {
-        tr = document.createElement('tr');
-        for (j = 0; j < num1; j++) {
-            td = document.createElement('td');
-            td.innerHTML = 1;
-            tr.appendChild(td);
-        }
-        fullTable.appendChild(tr);
-    }
-}
+// function tableValues() {
+//     width += 2;
+//     width1 += 2;
+//     for (i = 0; i < width1; i++) {
+//         tr = document.createElement('tr');
+//         for (j = 0; j < width; j++) {
+//             // tr.className = 'box';
+//             // tr.innerHTML = 1;
+//             // fullTable.appendChild(tr);
+//             td = document.createElement('td');
+//             td.className = 'box';
+//             td.innerHTML = array[j];
+//             tr.appendChild(td); 
+//         }
+//         fullTable.appendChild(tr);
+//     }
+// }
 
 tableCreator(width, width1);
+
+// tableValues();
 
 button.addEventListener('click', e => {
     doArray(table, array);
@@ -58,4 +64,4 @@ button.addEventListener('click', e => {
     location.reload();
 });
 
-tableValues(array, width, width1);
+
