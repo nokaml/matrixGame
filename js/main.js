@@ -4,15 +4,16 @@ var table = document.querySelector(".table");
 var button = document.querySelector(".btn1");
 var button1 = document.querySelector(".button");
 var fullTable = document.querySelector(".fullTable");
-var A = document.querySelector('.A');
-var B = document.querySelector('.B');
-var solution = document.querySelector('.solution');
+var A = document.querySelector(".A");
+var B = document.querySelector(".B");
+var solution = document.querySelector(".solution");
 
 var array = [];
 var minArr = [];
 var maxArr = [];
 var fullMinArr = [];
 var fullMaxArr = [];
+var matrixx = [];
 
 var selectValues = new URLSearchParams(window.location.search);
 var width = +selectValues.get("choice");
@@ -42,18 +43,27 @@ function doArray(table, arr) {
   }
 }
 
-function tableValues(array, num1, num2) {
-    num1 += 2;
-    num2 += 2;
-    for (i = 0; i < num2; i++) {
-        tr = document.createElement('tr');
-        for (j = 0; j < num1; j++) {
-            td = document.createElement('td');
-            td.innerHTML = 1;
-            tr.appendChild(td);
-        }
-        fullTable.appendChild(tr);
+function setCookie(name, value, options = {}) {
+  options = {
+    path: "/",
+    // при необходимости добавьте другие значения по умолчанию
+    ...options,
+  };
+
+  if (options.expires instanceof Date) {
+    options.expires = options.expires.toUTCString();
+  }
+
+  let updatedCookie =
+    encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+  for (let optionKey in options) {
+    updatedCookie += "; " + optionKey;
+    let optionValue = options[optionKey];
+    if (optionValue !== true) {
+      updatedCookie += "=" + optionValue;
     }
+  }
 
   document.cookie = updatedCookie;
 }
@@ -78,7 +88,7 @@ function getColumnsMax(matrix, rows, columns) {
     }
     maxValues.push(Math.max(...columnValues));
   }
-  
+
   return maxValues;
 }
 
@@ -89,20 +99,19 @@ function toOneDimension(matrix) {
       arr.push(matrix[i][j]);
     }
   }
-    return arr;
+  return arr;
 }
 
 function tableValues(num1, num2) {
-
   for (i = 0; i < num2; i++) {
-    let a = document.createElement('div');
-    a.innerHTML = 'A' + (i+1);
+    let a = document.createElement("div");
+    a.innerHTML = "A" + (i + 1);
     A.append(a);
   }
 
   for (i = 0; i < num1; i++) {
-    let b = document.createElement('div');
-    b.innerHTML = 'B' + (i+1);
+    let b = document.createElement("div");
+    b.innerHTML = "B" + (i + 1);
     B.append(b);
   }
 
@@ -115,29 +124,52 @@ function tableValues(num1, num2) {
     for (j = 0; j < num1; j++) {
       k++;
       let td = tr.insertCell();
-      td.innerHTML = getCookie('q'+k);
-      minArr.push(getCookie('q'+k));
-      temp.push(getCookie('q'+k));
+      td.innerHTML = getCookie("q" + k);
+      minArr.push(getCookie("q" + k));
+      temp.push(getCookie("q" + k));
     }
     maxArr.push(temp);
     fullMinArr.push(Math.min(...minArr));
     minArr.length = 0;
   }
-  
-  fullMaxArr.push(getColumnsMax(maxArr, num1, num2));
-  console.log(fullMinArr);
-  console.log(fullMaxArr);
+
+  fullMaxArr.push(getColumnsMax(maxArr, num2, num1));
+
   fullTable.appendChild(table);
+}
+
+function removeMaxValueOfArr(arr) {
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] == Math.max(...arr)) {
+      arr.splice(i, 1);
+    }
+  }
+}
+
+function doMatrix(arr, num1, num2) {
+  let k = 0;
+  for (let i = 0; i < num2; i++) {
+    let temp = [];
+    for (let j = 0; j < num1; j++) {
+      k++;
+      temp.push(getCookie("q" + k));
+    }
+    arr.push(temp);
+  }
+
+  return arr;
 }
 
 // actual actions
 
-tableCreator(width, width1);
+tableCreator(width1, width);
 
-button.addEventListener('click', e => {
+if (button) {
+  button.addEventListener("click", (e) => {
     doArray(table, array);
     for (let i = 0; i < array.length; i++) {
-      setCookie("q" + (i+1), array[i], { secure: true, "max-age": 5 });
+      setCookie("q" + (i + 1), array[i], { secure: true, "max-age": 5 });
     }
     for (let i = 0; i < array.length; i++) {
       if (isNaN(array[i])) {
@@ -148,6 +180,7 @@ button.addEventListener('click', e => {
       location.reload();
     }
   });
+}
 
 if (button1) {
   button1.addEventListener("click", () => {
@@ -155,26 +188,51 @@ if (button1) {
     var select2 = document.querySelector(".select2");
     setCookie("select1", select1.options[select1.selectedIndex].value, {
       secure: true,
-      "max-age": 20,
+      "max-age": 30,
     });
     setCookie("select2", select2.options[select2.selectedIndex].value, {
       secure: true,
-      "max-age": 20,
+      "max-age": 30,
     });
   });
 }
 
-tableValues(getCookie("select1"), getCookie("select2"));
+tableValues(getCookie("select2"), getCookie("select1"));
 
-document.addEventListener('DOMContentLoaded', () => {
+doMatrix(matrixx, getCookie("select2"), getCookie("select1"));
 
-  solution.innerHTML = `Находим гарантированный выигрыш, определяемый нижней ценой игры a = max(ai) = ${Math.max(...fullMinArr)}, которая указывает на максимальную чистую стратегию A2.<br>
-  Верхняя цена игры b = min(bj) = ${Math.min(...toOneDimension(fullMaxArr))}.<br>`;
+solution.innerHTML = `Находим гарантированный выигрыш, определяемый нижней ценой игры a = max(ai) = ${Math.max(
+  ...fullMinArr
+)}, которая указывает на максимальную чистую стратегию A2.<br>
+  Верхняя цена игры b = min(bj) = ${Math.min(
+    ...toOneDimension(fullMaxArr)
+  )}.<br>`;
 
-  if (Math.max(...fullMinArr) == Math.min(...toOneDimension(fullMaxArr))) {
-    solution.innerHTML += `Цена игры равна ${Math.max(...fullMinArr)}.`;
+if (Math.max(...fullMinArr) == Math.min(...toOneDimension(fullMaxArr))) {
+  solution.innerHTML += `Цена игры равна ${Math.max(...fullMinArr)}.`;
+} else {
+
+  for (let i = 0; i < getCookie("select1"); i++) {
+    while (matrixx[i].length != 2) {
+      removeMaxValueOfArr(matrixx[i]);
+    }
   }
-})
 
+  let p1 =
+    (matrixx[1][1] - matrixx[1][0]) /
+    (matrixx[0][0] + matrixx[1][1] - matrixx[1][0] - matrixx[0][1]);
+  let p2 =
+    (matrixx[0][0] - matrixx[0][1]) /
+    (matrixx[0][0] + matrixx[1][1] - matrixx[1][0] - matrixx[0][1]);
+  let q1 =
+    (matrixx[1][1] - matrixx[0][1]) /
+    (matrixx[0][0] + matrixx[1][1] - matrixx[1][0] - matrixx[0][1]);
+  let q2 =
+    (matrixx[0][0] - matrixx[1][0]) /
+    (matrixx[0][0] + matrixx[1][1] - matrixx[1][0] - matrixx[0][1]);
+  let v =
+    (matrixx[0][0] * matrixx[1][1] - matrixx[0][1] * matrixx[1][0]) /
+    (matrixx[0][0] + matrixx[1][1] - matrixx[1][0] - matrixx[0][1]);
 
-tableValues(array, width, width1);
+  console.log(matrixx, p1.toFixed(2), p2.toFixed(2), q1.toFixed(2), q2.toFixed(2), v.toFixed(2));
+}
