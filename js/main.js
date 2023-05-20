@@ -218,21 +218,28 @@ if (Math.max(...fullMinArr) == Math.min(...toOneDimension(fullMaxArr))) {
     }
   }
 
-  let p1 =
-    (matrixx[1][1] - matrixx[1][0]) /
-    (matrixx[0][0] + matrixx[1][1] - matrixx[1][0] - matrixx[0][1]);
-  let p2 =
-    (matrixx[0][0] - matrixx[0][1]) /
-    (matrixx[0][0] + matrixx[1][1] - matrixx[1][0] - matrixx[0][1]);
-  let q1 =
-    (matrixx[1][1] - matrixx[0][1]) /
-    (matrixx[0][0] + matrixx[1][1] - matrixx[1][0] - matrixx[0][1]);
-  let q2 =
-    (matrixx[0][0] - matrixx[1][0]) /
-    (matrixx[0][0] + matrixx[1][1] - matrixx[1][0] - matrixx[0][1]);
-  let v =
-    (matrixx[0][0] * matrixx[1][1] - matrixx[0][1] * matrixx[1][0]) /
-    (matrixx[0][0] + matrixx[1][1] - matrixx[1][0] - matrixx[0][1]);
+  array = matrixx.flat();
 
-  console.log(matrixx, p1.toFixed(2), p2.toFixed(2), q1.toFixed(2), q2.toFixed(2), v.toFixed(2));
+  const p1 =
+    (+array[3] - +array[2]) /
+    (+array[0] + +array[3] - +array[2] - +array[1]);
+  const p2 =
+    (+array[0] - +array[1]) /
+    (+array[0] + +array[3] - +array[2] - +array[1]);
+  const q1 =
+    (+array[3] - +array[1]) /
+    (+array[0] + +array[3] - +array[2] - +array[1]);
+  const q2 =
+    (+array[0] - +array[2]) /
+    (+array[0] + +array[3] - +array[2] - +array[1]);
+  const v =
+    (+array[0] * +array[3] - +array[1] * +array[2]) /
+    (+array[0] + +array[3] - +array[2] - +array[1]);
+
+  solution.innerHTML += `Ответы в смешанных стратегия:<br>
+  p1 = ${p1.toFixed(2)}<br>
+  p2 = ${p2.toFixed(2)}<br>
+  q1 = ${q1.toFixed(2)}<br>
+  q2 = ${q2.toFixed(2)}<br>
+  v = ${v.toFixed(2)}`;
 }
